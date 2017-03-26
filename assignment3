@@ -1,0 +1,46 @@
+
+
+Sceanario: 
+Consider a monolithic java application stack.
+Apache Web Server, Apache Tomcat application server with Active MQ and Oracle and MongoDB backend.
+
+
+
+
+
+Preparation
+
+1) Identify the resources to migrate, including application and database resources.
+2) Create a list of all the necessary software packages that are installed on your current production Server: Apache-Tomcat Server, DB Server Active MQ server etc.
+3) Create a list of type of Server configuration and type that will be required to migrate all application on AWS.
+4) Assumption: Since Oracle will be a license version we can contact Oracle for best way to migrate our DB to AWS.
+
+
+Proof of Concept:
+After all requirement gathering is completed then we will create a replica of the current production to AWS by taking latest backup of all the application and dump it on AWS server.
+Then we will do local testing on AWS Services like Network Security, Application level security testing, Server tunning as per current setup etc.
+
+DATA Migration:
+
+Once the proof of concept was complete, the team decided to move all of the application’s static files (Images, JS, CSS,
+video, audio, and static HTML content) into an Amazon S3 bucket, created a CloudFront distribution of that Amazon S3
+bucket, and modified the references in web pages so that end-users get the content directly from Amazon S3 and
+Amazon CloudFront. With a few scripts and the AWS SDK for Java library, they were able to transfer all data from tape
+drives and upload it to Amazon S3. 
+
+During the application migration phase, the development team launched both small and large instances
+for their web and tomcat servers. They created AMI for each server type. AMIs were designed to boot directly from an EBS volume and fetch the latest WAR file binaries during launch from the source code repository. They modified their build and deployment scripts to use the cloud as an endpoint. Security Groups were defined to isolate web servers from the applications and database servers. Testing (functional, load,performance etc.) was performed to ensure that the systems were performing at expected levels, and that exit criteria for each component were met.
+
+During the migration phase, the collocation infrastructure was not deprecated immediately.We employed a hybrid migration strategy during the migration of all web and application servers. The configuration of the onpremise
+hardware load balancer was modified to send requests to the new instances in the cloud. For a short
+duration, the load balancer was routing traffic to the servers in the cloud in as well as to the physical servers. After
+verifying that the servers in the cloud were performing at required levels, the physical servers were dismissed one by
+one, the load balancers were updated, and all of the web traffic was being served up by the EC2 instances running in
+the cloud. 
+After testing was completed, the DNS was switched to point to the cloud-based web servers and the application was
+fully migrated to the AWS cloud. 
+
+
+Optimization of Cloud Service:
+
+After migration we could optimise all our Server with service like Auto Scaling and we could reserve all instance type so that we save around 20-30% on Cost. 
